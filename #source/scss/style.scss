@@ -118,3 +118,18 @@ body {
     }
   }
 }
+
+@media (max-width: 767px) {
+ .main {
+   padding: 15px;
+ }
+  .weather__main {
+    padding: 15px;
+  }
+  .weather__deg {
+    font-size: 32px;
+    &-current {
+      font-size: 72px;
+    }
+  }
+}
