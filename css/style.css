@@ -105,7 +105,7 @@ body {
 
 .main {
   min-height: 100vh;
-  background: url("/img/main_bg.jpg") center/cover no-repeat;
+  background: url("../img/main_bg.jpg") center/cover no-repeat;
 }
 
 .header {
