@@ -1,17 +1,4 @@
-let getPositionByBrowser = new Promise((resolve) => {
-  navigator.geolocation.getCurrentPosition((pos) => {
-    let url = `https://api.openweathermap.org/data/2.5/weather?lat=${pos.coords.latitude}&lon=${pos.coords.longitude}&units=metric&appid=ea516a7f9e0e55490e7b63ea06b65f54`;
-    resolve(url);
-  }, getPositionByIP);
-}).then((url) => {
-  fetch(url)
-    .then((response) => response.json())
-    .then((data) => {
-      getForecastData(data)
-      renderCurrentWeather(data);
-    });
-});
-
+getPositionByIP()
 async function getPositionByIP() {
   return new Promise((resolve) => {
     ymaps.ready(init);
@@ -41,29 +28,30 @@ async function getPositionByIP() {
     });
 }
 
-async function getForecastData(data) {
+function getForecastData(data) {
   let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.geoObjects.position[0]}&lon=${data.geoObjects.position[1]}&units=metric&exclude=current,hourly,minutely,alerts&appid=ea516a7f9e0e55490e7b63ea06b65f54`;
   fetch(url)
     .then((response) => response.json())
-    .then((forecastData) => {
-      console.log(forecastData);
-      document.querySelectorAll(".weather__item").forEach((item, i) => {
-        item.querySelectorAll(".weather__item-day").forEach((item) => {
-          item.innerHTML = getCurrentDay(new Date().getDay() + 1 + i)
-            .substring(0, 3)
-            .toUpperCase();
-        });
-        item.querySelectorAll(".weather__item-image").forEach((item) => {
-          item.setAttribute(
-            "src",
-            `http://openweathermap.org/img/wn/${forecastData.daily[1 + i].weather[0].icon}@4x.png`
-          );
-        });
-        item.querySelectorAll('.weather__item-deg').forEach(item => {
-          item.textContent = `${parseInt(forecastData.daily[1 + i].temp.min)}°/${parseInt(forecastData.daily[1 + i].temp.max)}°`
-        })
-      });
+    .then(renderForecastWeather)
+}
+
+function renderForecastWeather(forecastData) {
+  document.querySelectorAll(".weather__item").forEach((item, i) => {
+    item.querySelectorAll(".weather__item-day").forEach((item) => {
+      item.innerHTML = getCurrentDay(new Date().getDay() + 1 + i)
+        .substring(0, 3)
+        .toUpperCase();
     });
+    item.querySelectorAll(".weather__item-image").forEach((item) => {
+      item.setAttribute(
+        "src",
+        `http://openweathermap.org/img/wn/${forecastData.daily[1 + i].weather[0].icon}@4x.png`
+      );
+    });
+    item.querySelectorAll('.weather__item-deg').forEach(item => {
+      item.textContent = `${parseInt(forecastData.daily[1 + i].temp.min)}°/${parseInt(forecastData.daily[1 + i].temp.max)}°`
+    })
+  });
 }
 
 function renderCurrentWeather(data) {
