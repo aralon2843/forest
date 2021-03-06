@@ -104,9 +104,8 @@ body {
 }
 
 .main {
-  height: 100vh;
-  background: #7291c7;
-  background: linear-gradient(180deg, #7291c7 0%, #ecc5be 100%);
+  min-height: 100vh;
+  background: url("/img/main_bg.jpg") center/cover no-repeat;
 }
 
 .header {
@@ -130,7 +129,7 @@ body {
 }
 .header__logo h1 span,
 .header__logo a span {
-  color: #e1c0be;
+  color: #262626;
   font-weight: 700;
 }
 .header__city {
@@ -142,67 +141,125 @@ body {
   font-weight: 400;
 }
 
-.weather {
-  max-width: 1000px;
+.app {
+  max-width: 960px;
   background-color: #fff;
-  background-color: #6a6acf;
-  border-radius: 25px;
+  background-color: rgba(255, 255, 255, 0.18);
   margin: 0 auto;
+  box-shadow: rgba(100, 100, 111, 0.2) 0px 7px 29px 0px;
 }
-.weather__main {
+.app .info {
   display: flex;
   justify-content: space-between;
-  padding: 70px 120px 25px 120px;
+  padding: 70px 120px 220px 120px;
   align-items: center;
 }
-.weather__info-city {
-  font-size: 28px;
-  font-weight: 300;
-  color: #ffffff;
-  text-transform: uppercase;
-  line-height: 48px;
-}
-.weather__info-date {
-  font-size: 16px;
-  color: #ffffff;
-  font-weight: 500;
-}
-.weather__info-img {
-  margin-top: 15px;
-  height: 120px;
-  width: 120px;
-  background: url("/img/icons/cloud.svg") center/cover no-repeat;
-}
-.weather__info-descr {
-  font-size: 28px;
-  color: #ffffff;
-  font-weight: 500;
-}
-.weather__deg {
-  font-family: "Titillium Web", sans-serif;
+.app .info__date {
   display: flex;
   flex-direction: column;
   align-items: center;
-  font-size: 42px;
-  color: #ffffff;
 }
-.weather__deg-current {
-  font-size: 124px;
+.app .info__date-time {
+  font-size: 64px;
+  color: #262626;
+  letter-spacing: 1.5px;
   font-weight: 200;
-  color: #ffffff;
 }
-.weather__deg-add {
-  margin-top: 15px;
+.app .info__date-day {
+  margin-top: 6px;
+  font-size: 18px;
+  color: #262626;
+  letter-spacing: 0.6px;
+  font-weight: 500;
+}
+.app .info__location {
   display: flex;
+  flex-direction: column;
+  align-items: flex-end;
 }
-.weather__deg-max {
-  color: #e1c0be;
+.app .info__location-city {
+  font-size: 28px;
+  font-weight: 400;
+  color: #262626;
 }
-.weather__deg-max span {
+.app .info__location-country {
+  margin-top: 6px;
+  font-size: 14px;
+  color: #262626;
+  letter-spacing: 0.6px;
+  font-weight: 300;
+}
+.app .weather {
+  padding: 25px;
+  display: flex;
+  background-color: rgba(0, 0, 0, 0.6);
+  align-items: center;
   color: #fff;
 }
-.weather__deg-min {
-  color: #939FC4;
+.app .weather__current {
+  flex: 1 1 30%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 25px;
+}
+.app .weather__current-info {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-right: 15px;
+  font-size: 16px;
+  font-weight: 500;
+}
+.app .weather__current-image {
+  object-fit: cover;
+  object-position: center;
+  width: 120px;
+  height: 120px;
+  pointer-events: none;
+}
+.app .weather__current-forecast {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.app .weather__current-day {
+  font-size: 14px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 25px;
+  padding: 9px;
+}
+.app .weather__current-deg {
+  margin-top: 15px;
+  font-size: 48px;
+}
+.app .weather__next {
+  display: flex;
+  flex: 1 1 70%;
+  justify-content: space-between;
+}
+.app .weather__next .weather__item {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+.app .weather__next .weather__item-day {
+  font-size: 12px;
+  background-color: rgba(0, 0, 0, 0.4);
+  border-radius: 25px;
+  padding: 7px;
+  margin-bottom: 15px;
+}
+.app .weather__next .weather__item-image {
+  width: 75px;
+  height: 75px;
+  object-fit: cover;
+  object-position: center;
+  margin-bottom: 15px;
+  pointer-events: none;
+}
+.app .weather__next .weather__item-deg {
+  font-size: 22px;
 }
 
 @media (max-width: 767px) {
@@ -210,14 +267,7 @@ body {
     padding: 15px;
   }
 
-  .weather__main {
-    padding: 15px;
-  }
-
-  .weather__deg {
-    font-size: 32px;
-  }
-  .weather__deg-current {
-    font-size: 72px;
+  .app .info {
+    padding: 15px 15px 45px 15px;
   }
 }
