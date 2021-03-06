@@ -1,4 +1,4 @@
-getPositionByIP()
+getPositionByIP();
 async function getPositionByIP() {
   return new Promise((resolve) => {
     ymaps.ready(init);
@@ -32,7 +32,7 @@ function getForecastData(data) {
   let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.geoObjects.position[0]}&lon=${data.geoObjects.position[1]}&units=metric&exclude=current,hourly,minutely,alerts&appid=ea516a7f9e0e55490e7b63ea06b65f54`;
   fetch(url)
     .then((response) => response.json())
-    .then(renderForecastWeather)
+    .then(renderForecastWeather);
 }
 
 function renderForecastWeather(forecastData) {
@@ -45,19 +45,27 @@ function renderForecastWeather(forecastData) {
     item.querySelectorAll(".weather__item-image").forEach((item) => {
       item.setAttribute(
         "src",
-        `http://openweathermap.org/img/wn/${forecastData.daily[1 + i].weather[0].icon}@4x.png`
+        `http://openweathermap.org/img/wn/${
+          forecastData.daily[1 + i].weather[0].icon
+        }@4x.png`
       );
     });
-    item.querySelectorAll('.weather__item-deg').forEach(item => {
-      item.textContent = `${parseInt(forecastData.daily[1 + i].temp.min)}°/${parseInt(forecastData.daily[1 + i].temp.max)}°`
-    })
+    item.querySelectorAll(".weather__item-deg").forEach((item) => {
+      item.textContent = `${parseInt(
+        forecastData.daily[1 + i].temp.min
+      )}°/${parseInt(forecastData.daily[1 + i].temp.max)}°`;
+    });
   });
 }
 
 function renderCurrentWeather(data) {
+  let currentHours = new Date().getHours()
+  if (currentHours < 10) currentHours = `0${currentHours}`
+  let currentMinutes= new Date().getMinutes()
+  if (currentMinutes < 10) currentMinutes = `0${currentMinutes}`
   document.querySelector(
     ".info__date-time"
-  ).innerHTML = `${new Date().getHours()}:${new Date().getMinutes()}`;
+  ).innerHTML = `${currentHours}:${currentMinutes}`;
   document.querySelector(".info__location-city").innerHTML = data.name;
   document.querySelector(".info__location-country").innerHTML =
     data.sys.country;
