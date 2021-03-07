@@ -67,9 +67,10 @@ function renderCurrentWeather(data) {
   const currentWeatherImage = document.querySelector(".weather__current-image");
   document.querySelector(".weather__current").classList.remove("placeholder");
   document.querySelector(".info__location-city").innerHTML = data.name;
+  document.querySelector(".weather__current-day").style.opacity = '1'
   document.querySelector(".info__location-country").innerHTML =
     data.sys.country;
-  document.querySelector(".info__date-day").innerHTML = `${getCurrentDay(
+    document.querySelector(".info__date-day").innerHTML = `${getCurrentDay(
     new Date().getDay()
   )}, ${new Date().getDate()} ${getCurrentMonth()} ${new Date().getFullYear()}`;
   currentWeatherImage.setAttribute(
