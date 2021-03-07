@@ -1,4 +1,6 @@
 getPositionByIP();
+setInterval(updateClock, 1000)
+updateClock()
 async function getPositionByIP() {
   return new Promise((resolve) => {
     ymaps.ready(init);
@@ -59,13 +61,6 @@ function renderForecastWeather(forecastData) {
 }
 
 function renderCurrentWeather(data) {
-  let currentHours = new Date().getHours()
-  if (currentHours < 10) currentHours = `0${currentHours}`
-  let currentMinutes= new Date().getMinutes()
-  if (currentMinutes < 10) currentMinutes = `0${currentMinutes}`
-  document.querySelector(
-    ".info__date-time"
-  ).innerHTML = `${currentHours}:${currentMinutes}`;
   document.querySelector(".info__location-city").innerHTML = data.name;
   document.querySelector(".info__location-country").innerHTML =
     data.sys.country;
@@ -84,6 +79,19 @@ function renderCurrentWeather(data) {
     data.main.temp
   )}°`;
 }
+
+function updateClock() {
+  document.querySelector(
+    ".info__date-time"
+  ).innerHTML = `${getZeroNum(new Date().getHours())}:${getZeroNum(new Date().getMinutes())}`;
+}
+
+function getZeroNum(num) {
+  if (num < 10) {
+    return `0${num}`
+  } else return num
+}
+
 function getCurrentDay(currentDay) {
   switch (currentDay) {
     case 0:
