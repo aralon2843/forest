@@ -1,6 +1,6 @@
 getPositionByIP();
-setInterval(updateClock, 1000)
-updateClock()
+setInterval(updateClock, 1000);
+updateClock();
 async function getPositionByIP() {
   return new Promise((resolve) => {
     ymaps.ready(init);
@@ -31,7 +31,7 @@ async function getPositionByIP() {
 }
 
 function getForecastData(data) {
-  let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.geoObjects.position[0]}&lon=${data.geoObjects.position[1]}&units=metric&exclude=current,hourly,minutely,alerts&appid=ea516a7f9e0e55490e7b63ea06b65f54`;
+  let url = `https://api.openweathermap.org/data/2.5/onecall?lat=${data.geoObjects.position[0]}&lon=${data.geoObjects.position[1]}&units=metric&exclude=current,minutely,alerts&appid=ea516a7f9e0e55490e7b63ea06b65f54`;
   fetch(url)
     .then((response) => response.json())
     .then(renderForecastWeather);
@@ -39,12 +39,15 @@ function getForecastData(data) {
 
 function renderForecastWeather(forecastData) {
   document.querySelectorAll(".weather__item").forEach((item, i) => {
+    item.classList.remove("placeholder");
     item.querySelectorAll(".weather__item-day").forEach((item) => {
+      item.style.opacity = "1";
       item.innerHTML = getCurrentDay(new Date().getDay() + 1 + i)
         .substring(0, 3)
         .toUpperCase();
     });
     item.querySelectorAll(".weather__item-image").forEach((item) => {
+      item.style.opacity = "1";
       item.setAttribute(
         "src",
         `http://openweathermap.org/img/wn/${
@@ -61,18 +64,19 @@ function renderForecastWeather(forecastData) {
 }
 
 function renderCurrentWeather(data) {
+  const currentWeatherImage = document.querySelector(".weather__current-image");
+  document.querySelector(".weather__current").classList.remove("placeholder");
   document.querySelector(".info__location-city").innerHTML = data.name;
   document.querySelector(".info__location-country").innerHTML =
     data.sys.country;
   document.querySelector(".info__date-day").innerHTML = `${getCurrentDay(
     new Date().getDay()
   )}, ${new Date().getDate()} ${getCurrentMonth()} ${new Date().getFullYear()}`;
-  document
-    .querySelector(".weather__current-image")
-    .setAttribute(
-      "src",
-      `http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`
-    );
+  currentWeatherImage.setAttribute(
+    "src",
+    `http://openweathermap.org/img/wn/${data.weather[0].icon}@4x.png`
+  );
+  currentWeatherImage.style.opacity = "1";
   document.querySelector(".weather__current-descr").innerHTML =
     data.weather[0].description;
   document.querySelector(".weather__current-deg").innerHTML = `${parseInt(
@@ -81,15 +85,15 @@ function renderCurrentWeather(data) {
 }
 
 function updateClock() {
-  document.querySelector(
-    ".info__date-time"
-  ).innerHTML = `${getZeroNum(new Date().getHours())}:${getZeroNum(new Date().getMinutes())}`;
+  document.querySelector(".info__date-time").innerHTML = `${getZeroNum(
+    new Date().getHours()
+  )}:${getZeroNum(new Date().getMinutes())}`;
 }
 
 function getZeroNum(num) {
   if (num < 10) {
-    return `0${num}`
-  } else return num
+    return `0${num}`;
+  } else return num;
 }
 
 function getCurrentDay(currentDay) {
